@@ -1,0 +1,5 @@
+# Ignore Unity-generated files
+Temp/
+Library/
+Logs/
+Obj/
