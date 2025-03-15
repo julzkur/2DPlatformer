@@ -196,7 +196,7 @@ MonoBehaviour:
   isGrounded: 0
   canDblJump: 0
   projectilePrefab: {fileID: 3593790109769827803, guid: 46a03b772c33338418166e1bd0ed7ea8, type: 3}
-  firePoint: {fileID: 0}
+  firePoint: {fileID: 3602570994314401792}
   projectileSpeed: 10
 --- !u!1001 &7437555467516513987
 PrefabInstance:

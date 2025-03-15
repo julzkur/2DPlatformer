@@ -147,8 +147,8 @@ MonoBehaviour:
     y: 0
     width: 190.4
     height: 503.2
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 226}
+  m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 12}
@@ -317,9 +317,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: b46d0000
       m_LastClickedID: 0
-      m_ExpandedIDs: f8faffff06fbffff
+      m_ExpandedIDs: 2efaffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -440,7 +440,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/DevAssets
+    - Assets/JuliaAssets/Prefabs
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -450,16 +450,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/DevAssets
+  - Assets/JuliaAssets/Prefabs
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Julia\Desktop\School\AGDD\2DPlatformer
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 102.899414}
-    m_SelectedIDs: c4af0000
-    m_LastClickedID: 44996
-    m_ExpandedIDs: 00000000f4ad0000c4af0000c6af000000ca9a3b
+    m_SelectedIDs: bc6d0000
+    m_LastClickedID: 28092
+    m_ExpandedIDs: 0000000076ae000078ae00007aae000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -488,7 +488,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000f2ad0000f4ad0000
+    m_ExpandedIDs: 0000000076ae000078ae00007aae0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1338,9 +1338,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: -3.2626624, y: 0.08272282, z: -0.010558592}
+    m_Target: {x: -2.1856325, y: -0.59451705, z: -0.022879966}
     speed: 2
-    m_Value: {x: -3.2626624, y: 0.08272282, z: -0.010558592}
+    m_Value: {x: -2.1856325, y: -0.59451705, z: -0.022879966}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1390,9 +1390,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 3.9350863
+    m_Target: 5.167226
     speed: 2
-    m_Value: 3.9350863
+    m_Value: 5.167226
   m_Ortho:
     m_Target: 1
     speed: 2

@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
         // Jump
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetKeyDown(KeyCode.W)) {
             
             if (isGrounded) {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpForce);
@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
 
         // Shooting
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             Shoot();
         }

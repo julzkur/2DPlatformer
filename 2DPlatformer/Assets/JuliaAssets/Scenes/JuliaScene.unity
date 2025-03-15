@@ -464,10 +464,6 @@ PrefabInstance:
       propertyPath: firePoint
       value: 
       objectReference: {fileID: 791074514}
-    - target: {fileID: 2593028219737210299, guid: 0931ba8b70c564540af2700e57ebbe73, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: adaab0eae8cfb99418de57ba823ed25a, type: 2}
     - target: {fileID: 3210971983680260404, guid: 0931ba8b70c564540af2700e57ebbe73, type: 3}
       propertyPath: m_Name
       value: Player
