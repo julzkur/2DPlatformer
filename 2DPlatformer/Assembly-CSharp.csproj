@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\JuliaAssets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\JuliaAssets\Scripts\EnemyMechanics.cs" />
     <Compile Include="Assets\JuliaAssets\Scripts\ToolProjectile.cs" />
   </ItemGroup>
   <ItemGroup>

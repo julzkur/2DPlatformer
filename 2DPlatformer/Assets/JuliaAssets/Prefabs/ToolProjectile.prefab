@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 3837507863347251648}
   m_Layer: 0
   m_Name: ToolProjectile
-  m_TagString: Untagged
+  m_TagString: PlayerProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -207,8 +207,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d19e85a9c85f2a489627c029ab4b6df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 10
-  Lifetime: 3
+  speed: 10
+  lifetime: 3
+  rotationSpeed: 360
 --- !u!1001 &4269803549640914947
 PrefabInstance:
   m_ObjectHideFlags: 0
