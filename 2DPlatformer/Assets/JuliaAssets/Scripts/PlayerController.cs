@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     public float MoveSpeed = 5f;
     private float lastMoveDirection = 1f; 
-
+    private int health = 5;
 
 
     [Header("Jump")]
@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     public float GravityScale = 2.5f;
 
     public bool isGrounded;
-    public bool canDblJump;
+    private bool canDblJump;
 
     [Header("Shooting")]
     public GameObject projectilePrefab;
@@ -106,6 +106,8 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
+        if (firePoint == null || projectilePrefab == null) return;
+        
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
         ToolProjectile projScript = projectile.GetComponent<ToolProjectile>();
 
@@ -113,5 +115,19 @@ public class PlayerController : MonoBehaviour
         {
             projScript.SetDirection(lastMoveDirection);
         }
+    }
+
+    public void TakeDamage()
+    {
+        health--;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 }
