@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("Jump")]
-    public float JumpForce = 5f;
+    public float JumpForce = 8f;
     public float DblJumpMultiplier = 0.5f;
     public Transform GroundCheck;
     public float GroundCheckRadius = 0.2f;
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
         // Jump
 
-        if (Input.GetKeyDown(KeyCode.W)) {
+        if (Input.GetKeyDown(KeyCode.Space)) {
             
             if (isGrounded) {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpForce);
@@ -94,7 +94,8 @@ public class PlayerController : MonoBehaviour
 
 
         // Shooting
-        if (Input.GetKeyDown(KeyCode.Space))
+
+        if (Input.GetMouseButtonDown(0))
         {
             Shoot();
         }
