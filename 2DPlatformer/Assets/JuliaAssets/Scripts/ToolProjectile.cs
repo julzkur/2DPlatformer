@@ -2,18 +2,20 @@ using UnityEngine;
 
 public class ToolProjectile : MonoBehaviour
 {
-    public float Speed = 10f;
-    public float Lifetime = 3f;
+    public float speed = 10f;
+    public float lifetime = 3f;
     private float direction = 1f;
+    public float rotationSpeed = 360f;
 
     private void Start()
     {
-        Destroy(gameObject, Lifetime); 
+        Destroy(gameObject, lifetime); 
     }
 
     void Update()
     {
-        transform.position += Vector3.right * direction * Speed * Time.deltaTime;
+        transform.position += Vector3.right * direction * speed * Time.deltaTime;
+        transform.Rotate(0, 0, rotationSpeed * Time.deltaTime * -direction); 
     }
 
     public void SetDirection(float dir)
