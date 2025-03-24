@@ -66,7 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\JuliaAssets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\JuliaAssets\Scripts\GameController.cs" />
     <Compile Include="Assets\JuliaAssets\Scripts\ToolProjectile.cs" />
+    <Compile Include="Assets\JuliaAssets\Scripts\CheckPoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
