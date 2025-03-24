@@ -19,7 +19,7 @@ public class CheckPoint : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            gameController.UpdateCheckooint(transform.position);
+            gameController.UpdateCheckpoint(transform.position);
         }
     }
 }

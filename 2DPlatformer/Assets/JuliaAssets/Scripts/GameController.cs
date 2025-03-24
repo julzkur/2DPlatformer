@@ -4,9 +4,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public static GameController Instance;
-    Vector2 startPos;
     Rigidbody2D playerRb;
-
     Vector2 checkpointPos;
 
     // CameraController camController;
@@ -27,9 +25,10 @@ public class GameController : MonoBehaviour
         playerRb.simulated = true;
     }
 
-    public void UpdateCheckooint(Vector2 pos)
+    public void UpdateCheckpoint(Vector2 pos)
     {
         checkpointPos = pos;
+        Debug.Log("Checkpoint updated");
     }
 
     void Update()

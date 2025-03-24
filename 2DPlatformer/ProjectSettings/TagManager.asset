@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - PlayerProjectile
   - EnemyProjectile
+  - Ladder
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

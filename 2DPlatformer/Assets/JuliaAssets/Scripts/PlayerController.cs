@@ -101,13 +101,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Ladder"))
-        {
-            Climb();
-        }
-    }
+    // void OnTriggerEnter2D(Collider2D collision)
+    // {
+    //     if (collision.CompareTag("Ladder"))
+    //     {
+    //         Climb();
+    //     }
+    // }
 
     void Climb()
     {
