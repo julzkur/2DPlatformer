@@ -1,16 +1,15 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
 
     private Rigidbody2D rb;
+    GameController gameController;
 
     [Header("Movement")]
     public float MoveSpeed = 5f;
     private float lastMoveDirection = 1f; 
     private int health = 5;
-
 
     [Header("Jump")]
     public float JumpForce = 8f;
@@ -19,9 +18,9 @@ public class PlayerController : MonoBehaviour
     public float GroundCheckRadius = 0.2f;
     public LayerMask GroundLayer;
     public float GravityScale = 2.5f;
-
     public bool isGrounded;
     private bool canDblJump;
+
 
     [Header("Shooting")]
     public GameObject projectilePrefab;
@@ -64,7 +63,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.gravityScale = GravityScale * 2f;  
         } 
-        else if (rb.linearVelocity.y > 0 && !Input.GetKey(KeyCode.Space)) 
+        else if (rb.linearVelocity.y > 0 && !Input.GetKey(KeyCode.W)) 
         {
             rb.gravityScale = GravityScale * 1.5f;  
         } 
@@ -74,17 +73,16 @@ public class PlayerController : MonoBehaviour
         }
 
         // Movement Left or Right
-
         float moveInput = Input.GetAxis("Horizontal");
         rb.linearVelocity = new Vector2(moveInput * MoveSpeed, rb.linearVelocity.y);
 
         if (moveInput != 0)
         {
             lastMoveDirection = Mathf.Sign(moveInput); // 1 if moving right, -1 if moving left
-        } // add or remove slide
+        } 
+
 
         // Flips sprite when moving left or right
-
         if (moveInput > 0)
         {
             transform.localScale = new Vector3(1, 1, 1); // right
@@ -101,7 +99,21 @@ public class PlayerController : MonoBehaviour
         {
             Shoot();
         }
-        
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            Climb();
+        }
+    }
+
+    void Climb()
+    {
+        float moveInput = Input.GetAxis("Vertical");
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, moveInput * MoveSpeed);
+        rb.gravityScale = 0;
     }
 
     void Shoot()
