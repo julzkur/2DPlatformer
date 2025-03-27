@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
-
     GameController gameController;
 
     void Awake()

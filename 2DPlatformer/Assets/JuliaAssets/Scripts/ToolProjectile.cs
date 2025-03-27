@@ -5,7 +5,6 @@ public class ToolProjectile : MonoBehaviour
     public float speed = 10f;
     public float lifetime = 3f;
     public float rotationSpeed = 360f;
-    
     public float gravityScale = 1f;
 
     private Rigidbody2D rb;
