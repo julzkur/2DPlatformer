@@ -22,15 +22,15 @@ public class EnemyProjectile : MonoBehaviour
         direction = dir;
         if (dir < 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1); 
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * dir, transform.localScale.y, transform.localScale.z);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Enemy"))
         {
-            collision.gameObject.GetComponent<PlayerController>().TakeDamage();
+            return;
         }
         Destroy(gameObject);
     }
