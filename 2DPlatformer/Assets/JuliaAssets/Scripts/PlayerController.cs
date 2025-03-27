@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -21,17 +22,28 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded;
     private bool canDblJump;
 
-
     [Header("Shooting")]
     public GameObject projectilePrefab;
     public Transform firePoint;
     public float projectileSpeed = 10f;
+    public float throwForce = 10f;
+    public float maxThrowDistance = 20f;
+    private float holdTime;
+    private LineRenderer trajectoryLine;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = GravityScale;
         rb.freezeRotation = true;
+
+        trajectoryLine = GetComponent<LineRenderer>();
+        trajectoryLine.positionCount = 0;
+        trajectoryLine.startWidth = 0.1f;
+        trajectoryLine.endWidth = 0.1f;
+        trajectoryLine.material = new Material(Shader.Find("Sprites/Default"));
+        trajectoryLine.startColor = Color.green;
+        trajectoryLine.endColor = Color.green;
     }
 
     void Update()
@@ -49,9 +61,11 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space)) {
             
-            if (isGrounded) {
+            if (isGrounded) 
+            {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpForce);
-            } else if (canDblJump) 
+            } 
+            else if (canDblJump) 
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpForce * DblJumpMultiplier);
                 canDblJump = false;
@@ -59,11 +73,12 @@ public class PlayerController : MonoBehaviour
         }
 
         // Affect how gravity affects player when moving either up or down along y axis
+
         if (rb.linearVelocity.y < 0) 
         {
             rb.gravityScale = GravityScale * 2f;  
         } 
-        else if (rb.linearVelocity.y > 0 && !Input.GetKey(KeyCode.W)) 
+        else if (rb.linearVelocity.y > 0 && !Input.GetKey(KeyCode.Space)) 
         {
             rb.gravityScale = GravityScale * 1.5f;  
         } 
@@ -97,7 +112,18 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            holdTime = 0f;
+            trajectoryLine.positionCount = 20;
+        }
+        if (Input.GetMouseButton(0))
+        {
+            holdTime += Time.deltaTime;
+            UpdateTrajectoryLine();
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
             Shoot();
+            trajectoryLine.positionCount = 0;
         }
     }
 
@@ -108,6 +134,15 @@ public class PlayerController : MonoBehaviour
     //         Climb();
     //     }
     // }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("EnemyProjectile"))
+        {
+            TakeDamage();
+        }
+
+    }
 
     void Climb()
     {
@@ -125,7 +160,24 @@ public class PlayerController : MonoBehaviour
 
         if (projScript != null)
         {
-            projScript.SetDirection(lastMoveDirection);
+            Debug.Log("hold time:" + holdTime);
+            projScript.SetDirectionandForce(holdTime, throwForce, maxThrowDistance, lastMoveDirection);
+        }
+    }
+
+    void UpdateTrajectoryLine()
+    {
+        Vector2 throwDirection = transform.localScale;
+
+        // Predict trajectory points
+        for (int i = 0; i < trajectoryLine.positionCount; i++)
+        {
+            float time = i * 0.5f;
+            Vector2 predictedPosition = (Vector2)firePoint.position + throwDirection * Mathf.Min(holdTime * throwForce, maxThrowDistance) * time + 0.5f * Physics2D.gravity * time * time;
+
+            
+
+            trajectoryLine.SetPosition(i, predictedPosition);
         }
     }
 

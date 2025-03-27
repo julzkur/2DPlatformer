@@ -152,8 +152,6 @@ public class EnemyMechanics : MonoBehaviour
         {
             projRb.SetDirection(lastMoveDirection);
         }
-
-        Destroy(projectile, 3f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
