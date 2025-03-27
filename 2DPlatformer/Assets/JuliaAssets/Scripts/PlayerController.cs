@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public Transform GroundCheck;
     public float GroundCheckRadius = 0.2f;
     public LayerMask GroundLayer;
+    public LayerMask OneWayLayer;
     public float GravityScale = 2.5f;
     public bool isGrounded;
     private bool canDblJump;
@@ -37,7 +38,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        isGrounded = Physics2D.OverlapCircle(GroundCheck.position, GroundCheckRadius, GroundLayer);
+        isGrounded = Physics2D.OverlapCircle(GroundCheck.position, GroundCheckRadius, GroundLayer + OneWayLayer);
 
 
         if (isGrounded) 
