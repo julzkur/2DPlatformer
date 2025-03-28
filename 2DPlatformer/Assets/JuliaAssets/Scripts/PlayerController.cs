@@ -190,6 +190,10 @@ public class PlayerController : MonoBehaviour
 
     void Die()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+
+        gameController.Respawn(1f);
+
+        gameObject.SetActive(true);
     }
 }

@@ -6,12 +6,7 @@ public class CheckPoint : MonoBehaviour
 
     void Awake()
     {
-        gameController = GameObject.FindGameObjectWithTag("Player").GetComponent<GameController>();
-    }
-
-    void Update()
-    {
-        
+        gameController = GameController.Instance;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -19,6 +14,7 @@ public class CheckPoint : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             gameController.UpdateCheckpoint(transform.position);
+            Destroy(gameObject);
         }
     }
 }

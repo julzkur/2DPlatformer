@@ -11,18 +11,31 @@ public class GameController : MonoBehaviour
 
     void Awake()
     {
-        checkpointPos = transform.position;
+        Instance = this;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        checkpointPos = player.transform.position;
     }
 
-    IEnumerator Respawn(float duration) 
+    public IEnumerator Respawn(float duration) 
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
+        SpriteRenderer sprite = player.GetComponent<SpriteRenderer>();
+
         playerRb.linearVelocity = Vector2.zero;
         playerRb.simulated = false;
-        transform.localScale = new Vector3(0, 0, 0);
+        sprite.enabled = false; // Hide player
+
         yield return new WaitForSeconds(duration);
-        transform.position = checkpointPos;
-        transform.localScale = new Vector3(1, 1, 1);;
+
+        player.transform.position = checkpointPos;
         playerRb.simulated = true;
+
+        // transform.localScale = new Vector3(0, 0, 0);
+        //yield return new WaitForSeconds(duration);
+        //transform.position = checkpointPos;
+        //transform.localScale = new Vector3(1, 1, 1);;
+        //playerRb.simulated = true;
     }
 
     public void UpdateCheckpoint(Vector2 pos)

@@ -6,7 +6,7 @@ public class EnemyMechanics : MonoBehaviour
     private Rigidbody2D rb;
     private bool isChasing = false;
     private float shootTimer = 0f;
-    private int health = 5;
+    private int health = 3;
 
 
     [Header("Movement")]
