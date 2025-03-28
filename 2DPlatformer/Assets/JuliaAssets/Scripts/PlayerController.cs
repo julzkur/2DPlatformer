@@ -32,8 +32,9 @@ public class PlayerController : MonoBehaviour
     private float holdTime;
     private LineRenderer trajectoryLine;
 
-    void Awake()
+    void Start()
     {
+        gameController = GameController.Instance;
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = GravityScale;
         rb.freezeRotation = true;
@@ -190,11 +191,13 @@ public class PlayerController : MonoBehaviour
     }
 
     void Die()
-    {
-        gameObject.SetActive(false);
-
-        gameController.Respawn(1f);
-
-        gameObject.SetActive(true);
+    {   
+        health = 5;
+        StartCoroutine(gameController.Respawn(1f));
+        if (health != 5)
+        {
+            Debug.Log("Resetting health");
+            health = 5;
+        }
     }
 }

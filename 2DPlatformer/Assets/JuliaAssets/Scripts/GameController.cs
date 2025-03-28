@@ -3,39 +3,59 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    public static GameController Instance;
-    Rigidbody2D playerRb;
+    public static GameController Instance { get; private set; }
     Vector2 checkpointPos;
 
     // CameraController camController;
 
     void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        checkpointPos = player.transform.position;
+        if (player != null)
+        {
+            checkpointPos = player.transform.position; // Set initial checkpoint
+        }
+        else
+        {
+            Debug.LogError("Player not found! Ensure your player has the correct tag.");
+        }
     }
 
     public IEnumerator Respawn(float duration) 
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogError("Respawn failed: Player not found!");
+            yield break;
+        }
+
         Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
-        SpriteRenderer sprite = player.GetComponent<SpriteRenderer>();
+        SpriteRenderer playerSprite = player.GetComponentInChildren<SpriteRenderer>();
 
         playerRb.linearVelocity = Vector2.zero;
         playerRb.simulated = false;
-        sprite.enabled = false; // Hide player
+        if (playerSprite != null)
+        {
+            playerSprite.enabled = false;
+        }
 
         yield return new WaitForSeconds(duration);
 
         player.transform.position = checkpointPos;
+
+        playerSprite.enabled = true; 
         playerRb.simulated = true;
 
-        // transform.localScale = new Vector3(0, 0, 0);
-        //yield return new WaitForSeconds(duration);
-        //transform.position = checkpointPos;
-        //transform.localScale = new Vector3(1, 1, 1);;
-        //playerRb.simulated = true;
     }
 
     public void UpdateCheckpoint(Vector2 pos)
@@ -44,8 +64,4 @@ public class GameController : MonoBehaviour
         Debug.Log("Checkpoint updated");
     }
 
-    void Update()
-    {
-        
-    }
 }
