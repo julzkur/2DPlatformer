@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 3
   tags:
   - Ground
+  - Enemy
+  - PlayerProjectile
+  - EnemyProjectile
+  - Ladder
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
@@ -12,9 +17,9 @@ TagManager:
   - Ground
   - Water
   - UI
-  - Grappable
-  - 
-  - 
+  - Climbable
+  - player
+  - OneWayLayer
   - 
   - 
   - 

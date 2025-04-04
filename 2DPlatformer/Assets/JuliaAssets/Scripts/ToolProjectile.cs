@@ -4,27 +4,42 @@ public class ToolProjectile : MonoBehaviour
 {
     public float speed = 10f;
     public float lifetime = 3f;
-    private float direction = 1f;
     public float rotationSpeed = 360f;
+    public float gravityScale = 1f;
+
+    private Rigidbody2D rb;
+    private Vector2 throwDirection;
+    private float faceDirection = 1f;
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = gravityScale;
         Destroy(gameObject, lifetime); 
     }
 
     void Update()
     {
-        transform.position += Vector3.right * direction * speed * Time.deltaTime;
-        transform.Rotate(0, 0, rotationSpeed * Time.deltaTime * -direction); 
+        transform.Rotate(0, 0, rotationSpeed * Time.deltaTime * -faceDirection); 
+        rb.angularVelocity = rotationSpeed * -faceDirection;
     }
 
-    public void SetDirection(float dir)
+    public void SetDirectionandForce(float holdTime, float throwForce, float maxThrowDistance, float dir)
     {
-        direction = dir;
+        faceDirection = dir;
         if (dir < 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1); 
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * dir, transform.localScale.y, transform.localScale.z);
         }
+        throwDirection = transform.localScale;
+
+        float force = Mathf.Min(holdTime * throwForce, maxThrowDistance);
+
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody2D>();
+        }
+        rb.linearVelocity = throwDirection * force;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
