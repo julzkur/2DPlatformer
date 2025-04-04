@@ -44,8 +44,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Outside
+    uniqueID: 68371389
+    locked: 0
+  - name: Background
+    uniqueID: 3054344925
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: PLayer
+    uniqueID: 1777354837
     locked: 0
   m_RenderingLayers:
   - Default
