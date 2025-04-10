@@ -8,6 +8,7 @@ public class BigMan : MonoBehaviour
     [Header("Movement")]
     public float MoveSpeed = 5f;
     private float lastMoveDirection = 1f; 
+    private int health = 5;
 
     [Header("Jump")]
     public float JumpForce = 8f;
@@ -23,6 +24,9 @@ public class BigMan : MonoBehaviour
     public GameObject projectilePrefab;
     public Transform firePoint;
     public float projectileSpeed = 10f;
+    public float throwForce = 10f;
+    public float maxThrowDistance = 20f;
+    private float holdTime;
 
     [Header("Grappling Hook")]
     public float grappleRange = 5f;
@@ -40,9 +44,11 @@ public class BigMan : MonoBehaviour
     private GameObject[] grapplePointsInRange = new GameObject[10]; // Pre-allocate array
     private int grapplePointCount = 0;
     private bool grappleKeyWasPressed = false;  // Track if the key was already pressed
+    private LineRenderer trajectoryLine;
     
     void Awake()
     {
+        gameController = GameController.Instance;
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = GravityScale;
         rb.freezeRotation = true;
@@ -63,6 +69,14 @@ public class BigMan : MonoBehaviour
             ropeRenderer.positionCount = 2;
             ropeRenderer.enabled = false;
         }
+
+        trajectoryLine = GetComponent<LineRenderer>();
+        trajectoryLine.positionCount = 0;
+        trajectoryLine.startWidth = 0.1f;
+        trajectoryLine.endWidth = 0.1f;
+        trajectoryLine.material = new Material(Shader.Find("Sprites/Default"));
+        trajectoryLine.startColor = Color.green;
+        trajectoryLine.endColor = Color.green;
     }
 
     void Update()
@@ -150,9 +164,20 @@ public class BigMan : MonoBehaviour
         }
 
         // Shooting
-        if (Input.GetMouseButtonDown(0) && !isGrappling)
+        if (Input.GetMouseButtonDown(0))
+        {
+            holdTime = 0f;
+            trajectoryLine.positionCount = 20;
+        }
+        if (Input.GetMouseButton(0))
+        {
+            holdTime += Time.deltaTime;
+            UpdateTrajectoryLine();
+        }
+        if (Input.GetMouseButtonUp(0))
         {
             Shoot();
+            trajectoryLine.positionCount = 0;
         }
     }
 
@@ -242,15 +267,51 @@ public class BigMan : MonoBehaviour
 
     void Shoot()
     {
+        if (firePoint == null || projectilePrefab == null) return;
+        
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
         ToolProjectile projScript = projectile.GetComponent<ToolProjectile>();
 
         if (projScript != null)
         {
-            projScript.SetDirection(lastMoveDirection);
+            projScript.SetDirectionandForce(holdTime, throwForce, maxThrowDistance, lastMoveDirection);
         }
     }
     
+
+    void UpdateTrajectoryLine()
+    {
+        Vector2 throwDirection = transform.localScale;
+
+        // Predict trajectory points
+        for (int i = 0; i < trajectoryLine.positionCount; i++)
+        {
+            float time = i * 0.5f;
+            Vector2 predictedPosition = (Vector2)firePoint.position + throwDirection * Mathf.Min(
+                holdTime * throwForce, maxThrowDistance) * time + 0.5f * Physics2D.gravity * time * time;
+            trajectoryLine.SetPosition(i, predictedPosition);
+        }
+    }
+
+    public void TakeDamage()
+    {
+        health--;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {   
+        health = 5;
+        StartCoroutine(gameController.Respawn(1f));
+        if (health != 5)
+        {
+            Debug.Log("Resetting health");
+            health = 5;
+        }
+    }
     // Draw grapple range in the editor for debugging
     void OnDrawGizmosSelected()
     {

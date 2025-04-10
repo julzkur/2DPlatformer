@@ -32,12 +32,45 @@ public class PlayerController : MonoBehaviour
     private float holdTime;
     private LineRenderer trajectoryLine;
 
+    [Header("Grappling Hook")]
+    public float grappleRange = 5f;
+    public float swingForce = 1.5f;
+    public KeyCode grappleKey = KeyCode.E;
+    public LayerMask grappableLayer;
+    public GameObject grapplePointPrefab;
+    public LineRenderer ropeRenderer;
+    public float momentumRetention = 0.9f;  // How much momentum to keep after detaching (0-1)
+    
+    // Grappling internals
+    private bool isGrappling = false;
+    private Vector2 grapplePoint;
+    private DistanceJoint2D ropeJoint;
+    private GameObject[] grapplePointsInRange = new GameObject[10]; // Pre-allocate array
+    private int grapplePointCount = 0;
+
     void Start()
     {
         gameController = GameController.Instance;
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = GravityScale;
         rb.freezeRotation = true;
+
+        // ropeJoint = gameObject.AddComponent<DistanceJoint2D>();
+        // ropeJoint.enabled = false;
+        
+        // // Setup line renderer if not assigned
+        // if (ropeRenderer == null)
+        // {
+        //     ropeRenderer = gameObject.AddComponent<LineRenderer>();
+        //     ropeRenderer.startWidth = 0.05f;
+        //     ropeRenderer.endWidth = 0.05f;
+        //     ropeRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        //     ropeRenderer.startColor = Color.black;
+        //     ropeRenderer.endColor = Color.black;
+        //     ropeRenderer.positionCount = 2;
+        //     ropeRenderer.enabled = false;
+        // }
+
 
         trajectoryLine = GetComponent<LineRenderer>();
         trajectoryLine.positionCount = 0;
@@ -91,12 +124,17 @@ public class PlayerController : MonoBehaviour
 
         // Movement Left or Right
         float moveInput = Input.GetAxis("Horizontal");
-        rb.linearVelocity = new Vector2(moveInput * MoveSpeed, rb.linearVelocity.y);
+        
 
         if (moveInput != 0)
         {
+            rb.linearVelocity = new Vector2(moveInput * MoveSpeed, rb.linearVelocity.y);
             lastMoveDirection = Mathf.Sign(moveInput); // 1 if moving right, -1 if moving left
         } 
+        else
+        {
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+        }
 
 
         // Flips sprite when moving left or right
