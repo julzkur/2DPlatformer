@@ -203,9 +203,9 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage()
     {
-        if (PlayerHealthHearts.Instance != null)
+        if (PlayerHealth.Instance != null)
         {
-            PlayerHealthHearts.Instance.TakeDamage(1);
+            PlayerHealth.Instance.TakeDamage(1);
         }
     }
 }

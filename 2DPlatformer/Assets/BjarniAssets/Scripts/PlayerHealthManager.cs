@@ -1,11 +1,12 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealthHearts : MonoBehaviour
+public class PlayerHealth : MonoBehaviour
 {
-    public static PlayerHealthHearts Instance;    public int maxHealth = 5;
+    public static PlayerHealth Instance;    public int maxHealth = 5;
     public int currentHealth;
-
+    public bool isActive = true;
     public GameObject[] hearts;
 
     void Awake()

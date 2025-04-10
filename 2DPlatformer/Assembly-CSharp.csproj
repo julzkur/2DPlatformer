@@ -67,9 +67,10 @@
   <ItemGroup>
     <Compile Include="Assets\JuliaAssets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\JuliaAssets\Scripts\GameController.cs" />
-    <Compile Include="Assets\BjarniAssets\Scripts\PlayerClimb.cs" />
+    <Compile Include="Assets\BjarniAssets\Scripts\YouWon.cs" />
     <Compile Include="Assets\BjornAssets\Scripts\GrapplingPoint.cs" />
     <Compile Include="Assets\JuliaAssets\Scripts\EnemyProjectile.cs" />
+    <Compile Include="Assets\BjarniAssets\Scripts\PipeTeleporter.cs" />
     <Compile Include="Assets\BjarniAssets\Scripts\Lever.cs" />
     <Compile Include="Assets\BjarniAssets\Scripts\PauseMenu.cs" />
     <Compile Include="Assets\BjarniAssets\Scripts\DropDown.cs" />
@@ -77,7 +78,6 @@
     <Compile Include="Assets\BjarniAssets\Scripts\PlayerHealthManager.cs" />
     <Compile Include="Assets\JuliaAssets\Scripts\EnemyMechanics.cs" />
     <Compile Include="Assets\BjarniAssets\Scripts\CameraFollowsPlayer.cs" />
-    <Compile Include="Assets\BjarniAssets\Scripts\LadderHandlers.cs" />
     <Compile Include="Assets\JuliaAssets\Scripts\ToolProjectile.cs" />
     <Compile Include="Assets\JuliaAssets\Scripts\CheckPoint.cs" />
     <Compile Include="Assets\BjarniAssets\Scripts\MainMenu.cs" />

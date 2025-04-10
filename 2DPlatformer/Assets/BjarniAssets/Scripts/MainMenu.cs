@@ -4,21 +4,9 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    public Button Play;
-    public Button Exit;
 
-    private void Awake()
-    {
-        if (Play)
-        {
-            Play.onClick.AddListener(PlayOnClick);
-        }
-        
-        if (Exit)
-        {
-            Exit.onClick.AddListener(ExitOnClick);
-        }
-    }
+    public GameObject ControlsPanel;
+    public bool showingControls = false;
     
     void Update()
     {
@@ -28,11 +16,20 @@ public class MainMenu : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.P)) {
             SceneManager.LoadScene("Game");
         }
+        else if (Input.GetKeyDown(KeyCode.C)) {
+            ShowControls();
+        }
     }
 
     public void PlayOnClick()
     {
         SceneManager.LoadScene("Game");
+    }
+
+    public void ShowControls()
+    {
+        showingControls = !showingControls;
+        ControlsPanel.SetActive(showingControls);
     }
 
     public void ExitOnClick()
