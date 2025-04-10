@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Lever : MonoBehaviour
@@ -7,21 +8,26 @@ public class Lever : MonoBehaviour
     public Color deactivatedColor = new Color(0.6f, 0.2f, 0.2f); // Dark red
     public GameObject leverOn;
     public GameObject leverOff;
-
     public bool isActivated = false;
+    public bool canChange = false;
 
     void Start()
     {
+        print("Starting");
         UpdateLeverState();
     }
 
-    void Update()
+    void Update() 
     {
-        if (Input.GetKeyDown(KeyCode.E) && PlayerIsNearby())
+        if (canChange)
         {
-            isActivated = !isActivated;
-            TogglePlatforms(isActivated);
-            UpdateLeverState();
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                print("E");
+                isActivated = !isActivated;
+                TogglePlatforms(isActivated);
+                UpdateLeverState();
+            }
         }
     }
 
@@ -46,9 +52,13 @@ public class Lever : MonoBehaviour
         leverOff.SetActive(!isActivated);
     }
 
-    bool PlayerIsNearby()
+    void OnTriggerEnter2D (Collider2D collision)
     {
-        Collider2D player = Physics2D.OverlapCircle(transform.position, 1f, LayerMask.GetMask("Player"));
-        return player != null;
+        canChange = true;
+    }
+
+    void OnTriggerExit2D (Collider2D collision)
+    {
+        canChange = false;
     }
 }

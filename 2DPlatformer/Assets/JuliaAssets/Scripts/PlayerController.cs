@@ -1,4 +1,5 @@
 
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,7 +11,6 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     public float MoveSpeed = 5f;
     private float lastMoveDirection = 1f; 
-    private int health = 5;
 
     [Header("Jump")]
     public float JumpForce = 8f;
@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
     [Header("Shooting")]
     public GameObject projectilePrefab;
     public Transform firePoint;
+    private int shootDirection = 1; // 1 = right, -1 = left
+    private bool isChargingShot = false;
+
     public float projectileSpeed = 10f;
     public float throwForce = 10f;
     public float maxThrowDistance = 20f;
@@ -112,20 +115,36 @@ public class PlayerController : MonoBehaviour
 
         // Shooting
 
-        if (Input.GetMouseButtonDown(0))
+        // Start charging shot
+        if (Input.GetKeyDown(KeyCode.J))
         {
+            shootDirection = -1;
             holdTime = 0f;
+            isChargingShot = true;
             trajectoryLine.positionCount = 20;
         }
-        if (Input.GetMouseButton(0))
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            shootDirection = 1;
+            holdTime = 0f;
+            isChargingShot = true;
+            trajectoryLine.positionCount = 20;
+        }
+
+        // While holding J or K, keep charging and update line
+        if (isChargingShot && (Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.K)))
         {
             holdTime += Time.deltaTime;
             UpdateTrajectoryLine();
         }
-        if (Input.GetMouseButtonUp(0))
+
+        // Releasing either key fires
+        if (isChargingShot && (Input.GetKeyUp(KeyCode.J) || Input.GetKeyUp(KeyCode.K)))
         {
             Shoot();
             trajectoryLine.positionCount = 0;
+            isChargingShot = false;
         }
     }
 
@@ -156,48 +175,37 @@ public class PlayerController : MonoBehaviour
     void Shoot()
     {
         if (firePoint == null || projectilePrefab == null) return;
-        
+
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
         ToolProjectile projScript = projectile.GetComponent<ToolProjectile>();
 
         if (projScript != null)
         {
-            Debug.Log("hold time:" + holdTime);
-            projScript.SetDirectionandForce(holdTime, throwForce, maxThrowDistance, lastMoveDirection);
+            projScript.SetDirectionandForce(holdTime, throwForce, maxThrowDistance, shootDirection);
         }
     }
 
+
     void UpdateTrajectoryLine()
     {
-        Vector2 throwDirection = transform.localScale;
+        Vector2 throwDirection = new Vector2(shootDirection, 1).normalized;
 
-        // Predict trajectory points
         for (int i = 0; i < trajectoryLine.positionCount; i++)
         {
-            float time = i * 0.5f;
-            Vector2 predictedPosition = (Vector2)firePoint.position + throwDirection * Mathf.Min(
-                holdTime * throwForce, maxThrowDistance) * time + 0.5f * Physics2D.gravity * time * time;
+            float time = i * 0.1f;
+            Vector2 predictedPosition = (Vector2)firePoint.position +
+                throwDirection * Mathf.Min(holdTime * throwForce, maxThrowDistance) * time +
+                0.5f * Physics2D.gravity * time * time;
+
             trajectoryLine.SetPosition(i, predictedPosition);
         }
     }
 
     public void TakeDamage()
     {
-        health--;
-        if (health <= 0)
+        if (PlayerHealthHearts.Instance != null)
         {
-            Die();
-        }
-    }
-
-    void Die()
-    {   
-        health = 5;
-        StartCoroutine(gameController.Respawn(1f));
-        if (health != 5)
-        {
-            Debug.Log("Resetting health");
-            health = 5;
+            PlayerHealthHearts.Instance.TakeDamage(1);
         }
     }
 }
