@@ -70,11 +70,13 @@
     <Compile Include="Assets\BjarniAssets\Scripts\PlayerClimb.cs" />
     <Compile Include="Assets\BjornAssets\Scripts\GrapplingPoint.cs" />
     <Compile Include="Assets\JuliaAssets\Scripts\EnemyProjectile.cs" />
+    <Compile Include="Assets\BjornAssets\Scripts\newPlayer.cs" />
     <Compile Include="Assets\BjarniAssets\Scripts\Lever.cs" />
     <Compile Include="Assets\BjarniAssets\Scripts\DropDown.cs" />
     <Compile Include="Assets\BjornAssets\Scripts\BigMan.cs" />
     <Compile Include="Assets\JuliaAssets\Scripts\EnemyMechanics.cs" />
     <Compile Include="Assets\BjarniAssets\Scripts\CameraFollowsPlayer.cs" />
+    <Compile Include="Assets\BjornAssets\Scripts\newProjectile.cs" />
     <Compile Include="Assets\BjarniAssets\Scripts\LadderHandlers.cs" />
     <Compile Include="Assets\JuliaAssets\Scripts\ToolProjectile.cs" />
     <Compile Include="Assets\JuliaAssets\Scripts\CheckPoint.cs" />

@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class GrapplePoint : MonoBehaviour
+public class GrapplingPoint : MonoBehaviour
 {
     // Visual indicator when player is in range
     public GameObject inRangeIndicator;
     
     void Start()
     {
+        // Ensure this object has the correct tag
+        gameObject.tag = "GrapplePoint";
+        
         // Create a visual indicator if one doesn't exist
         if (inRangeIndicator == null)
         {
@@ -23,6 +26,14 @@ public class GrapplePoint : MonoBehaviour
         
         // Hide indicator by default
         inRangeIndicator.SetActive(false);
+
+        // Ensure there's a collider
+        if (GetComponent<Collider2D>() == null)
+        {
+            CircleCollider2D collider = gameObject.AddComponent<CircleCollider2D>();
+            collider.isTrigger = true;
+            collider.radius = 0.5f;
+        }
     }
     
     // Player detection using triggers
@@ -41,4 +52,4 @@ public class GrapplePoint : MonoBehaviour
             inRangeIndicator.SetActive(false);
         }
     }
-}
+} 
