@@ -245,10 +245,10 @@ public class BigMan : MonoBehaviour
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
         ToolProjectile projScript = projectile.GetComponent<ToolProjectile>();
 
-        if (projScript != null)
-        {
-            projScript.SetDirection(lastMoveDirection);
-        }
+        // if (projScript != null)
+        // {
+        //     projScript.SetDirectionandForce(lastMoveDirection);
+        // }
     }
     
     // Draw grapple range in the editor for debugging
