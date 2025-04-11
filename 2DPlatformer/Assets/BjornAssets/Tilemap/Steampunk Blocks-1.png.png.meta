@@ -1,28 +1,10 @@
 fileFormatVersion: 2
-guid: 1ac75b5a04d47104f9486efdf2e9a836
+guid: 043942ecc1f5acf46b0df77ab204d1e4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 936160139937261469
-    second: Steampunk Brick Back_0
-  - first:
-      213: -6863691829923383336
-    second: Steampunk Brick Back_1
-  - first:
-      213: -7533006468418286892
-    second: Steampunk Brick Back_2
-  - first:
-      213: 6812859818799801838
-    second: Steampunk Brick Back_3
-  - first:
-      213: -5667702798962053106
-    second: Steampunk Brick Back_4
-  - first:
-      213: 6542120746697216803
-    second: Steampunk Brick Back_5
-  - first:
-      213: -1245882521773515829
-    second: Steampunk Brick Back_6
+      213: 5739499714908765816
+    second: Steampunk Blocks-1.png_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -69,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 40
+  spritePixelsToUnits: 48
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -131,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Steampunk Brick Back_0
+      name: Steampunk Blocks-1.png_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 51
-        width: 12
-        height: 11
+        x: 95
+        y: 2
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,140 +128,162 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d9727d1ffa8edfc00800000000000000
-      internalID: 936160139937261469
+      spriteID: 87eb79fd49cc6af40800000000000000
+      internalID: 5739499714908765816
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Steampunk Brick Back_1
+      name: Steampunk Blocks-1.png_1
       rect:
         serializedVersion: 2
-        x: 18
-        y: 50
-        width: 44
-        height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8d77aa565a44fb0a0800000000000000
-      internalID: -6863691829923383336
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Steampunk Brick Back_2
-      rect:
-        serializedVersion: 2
-        x: 66
-        y: 34
-        width: 28
-        height: 28
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4da453f4782657790800000000000000
-      internalID: -7533006468418286892
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Steampunk Brick Back_3
-      rect:
-        serializedVersion: 2
-        x: 105
-        y: 7
-        width: 74
-        height: 52
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ee5281cb8e32c8e50800000000000000
-      internalID: 6812859818799801838
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Steampunk Brick Back_4
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 3
-        width: 12
-        height: 43
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e00316745564851b0800000000000000
-      internalID: -5667702798962053106
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Steampunk Brick Back_5
-      rect:
-        serializedVersion: 2
-        x: 20
-        y: 5
-        width: 40
-        height: 39
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 323d99058284aca50800000000000000
-      internalID: 6542120746697216803
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Steampunk Brick Back_6
-      rect:
-        serializedVersion: 2
-        x: 63
+        x: 0
         y: 0
-        width: 34
-        height: 33
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: bcb52d9827cb5bee0800000000000000
-      internalID: -1245882521773515829
+      spriteID: 892ab2da5c477f3449a2ad983a74b2a3
+      internalID: 1775181002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk Blocks-1.png_2
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 72
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad55e8f2ce7b23a4298185a50b1618f4
+      internalID: -1110170284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk Blocks-1.png_3
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 64
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b994b770b380694b9cf9beecc86a187
+      internalID: 1851126808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk Blocks-1.png_4
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 2
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cb912a3fa8251744829e88b96cf0546
+      internalID: 39611800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk Blocks-1.png_5
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 4
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88d651f6f4ec7c444b00a4cbd465e05c
+      internalID: 710551502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk Blocks-1.png_6
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 72
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbfcf142dc06bdf48aa8abc08996c3fe
+      internalID: 1290398242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk Blocks-1.png_7
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 64
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffb99ec50f80b144eba9874a6bcca7d0
+      internalID: 1656753395
       vertices: []
       indices: 
       edges: []
@@ -288,7 +292,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b2b028499b8294d4e85903a470a34b9d
+    spriteID: 72bc5dc99218fb34b95d69afe1a35a7c
     internalID: 0
     vertices: []
     indices: 
@@ -298,13 +302,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Steampunk Brick Back_0: 936160139937261469
-      Steampunk Brick Back_1: -6863691829923383336
-      Steampunk Brick Back_2: -7533006468418286892
-      Steampunk Brick Back_3: 6812859818799801838
-      Steampunk Brick Back_4: -5667702798962053106
-      Steampunk Brick Back_5: 6542120746697216803
-      Steampunk Brick Back_6: -1245882521773515829
+      Steampunk Blocks-1.png_1: 1775181002
+      Steampunk Blocks-1.png_2: -1110170284
+      Steampunk Blocks-1.png_3: 1851126808
+      Steampunk Blocks-1.png_4: 39611800
+      Steampunk Blocks-1.png_5: 710551502
+      Steampunk Blocks-1.png_6: 1290398242
+      Steampunk Blocks-1.png_7: 1656753395
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

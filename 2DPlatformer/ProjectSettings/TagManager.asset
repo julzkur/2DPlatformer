@@ -11,6 +11,7 @@ TagManager:
   - Ladder
   - Checkpoint
   - Audio
+  - GrapplePoint
   layers:
   - Default
   - TransparentFX
