@@ -10,6 +10,9 @@ public class EnemyMechanics : MonoBehaviour
     private float maxHealth = 3;
     [SerializeField] EnHealthBar healthBar;
 
+    AudioManager audioManager;
+    
+
 
     [Header("Movement")]
     public float MoveSpeed = 2.5f;
@@ -44,6 +47,11 @@ public class EnemyMechanics : MonoBehaviour
         currentPoint = point2.transform;
         lastMoveDirection = (transform.localScale.x >= 0) ? 1f : -1f;
         healthBar = GetComponentInChildren<EnHealthBar>();
+        audioManager = GameObject.FindWithTag("Audio").GetComponent<AudioManager>();
+        if (audioManager == null)
+        {
+            Debug.LogError("AudioManager not found in the scene.");
+        }
     }
 
     void Start()
@@ -155,6 +163,7 @@ public class EnemyMechanics : MonoBehaviour
         if (firePoint == null || projectilePrefab == null) return;
 
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+        audioManager.PlaySFX(audioManager.enemyShoot);
         EnemyProjectile projRb = projectile.GetComponent<EnemyProjectile>();
         
         if (projRb != null)
@@ -174,6 +183,7 @@ public class EnemyMechanics : MonoBehaviour
 
     public void TakeDamage()
     {
+        audioManager.PlaySFX(audioManager.enemyHit);
         health--;
         healthBar.UpdateHealthBar(health, maxHealth);
         if (health <= 0)

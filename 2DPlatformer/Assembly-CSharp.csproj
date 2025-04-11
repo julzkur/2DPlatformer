@@ -68,6 +68,7 @@
     <Compile Include="Assets\JuliaAssets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\JuliaAssets\Scripts\GameController.cs" />
     <Compile Include="Assets\BjarniAssets\Scripts\YouWon.cs" />
+    <Compile Include="Assets\JuliaAssets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\BjornAssets\Scripts\GrapplingPoint.cs" />
     <Compile Include="Assets\JuliaAssets\Scripts\EnemyProjectile.cs" />
     <Compile Include="Assets\BjarniAssets\Scripts\PipeTeleporter.cs" />
