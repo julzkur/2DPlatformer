@@ -6,11 +6,13 @@ public class PlayerController : MonoBehaviour
 {
 
     private Rigidbody2D rb;
+    AudioManager audioManager;
     GameController gameController;
 
     [Header("Movement")]
     public float MoveSpeed = 5f;
-    private float lastMoveDirection = 1f; 
+    private bool isFacingRight = true;
+    private float horizontal;
 
     [Header("Jump")]
     public float JumpForce = 8f;
@@ -33,7 +35,7 @@ public class PlayerController : MonoBehaviour
     public float throwForce = 10f;
     public float maxThrowDistance = 20f;
     private float holdTime;
-    private LineRenderer trajectoryLine;
+    [SerializeField] LineRenderer trajectoryLine;
 
     [Header("Grappling Hook")]
     public float grappleRange = 5f;
@@ -41,7 +43,7 @@ public class PlayerController : MonoBehaviour
     public KeyCode grappleKey = KeyCode.E;
     public LayerMask grappableLayer;
     public GameObject grapplePointPrefab;
-    public LineRenderer ropeRenderer;
+    [SerializeField] LineRenderer ropeRenderer;
     public float momentumRetention = 0.9f;  // How much momentum to keep after detaching (0-1)
     
     // Grappling internals
@@ -51,10 +53,18 @@ public class PlayerController : MonoBehaviour
     private GameObject[] grapplePointsInRange = new GameObject[10]; // Pre-allocate array
     private int grapplePointCount = 0;
 
+    void Awake()
+    {
+        audioManager = GameObject.FindWithTag("Audio").GetComponent<AudioManager>();
+        if (audioManager == null)
+        {
+            Debug.LogError("AudioManager not found in the scene.");
+        }
+        rb = GetComponent<Rigidbody2D>();
+    }
     void Start()
     {
         gameController = GameController.Instance;
-        rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = GravityScale;
         rb.freezeRotation = true;
 
@@ -64,22 +74,23 @@ public class PlayerController : MonoBehaviour
         // Setup line renderer if not assigned
         if (ropeRenderer == null)
         {
-            ropeRenderer = transform.Find("PlayerSprite").GetComponent<LineRenderer>();
-            if (ropeRenderer == null)
-            {
-                ropeRenderer = gameObject.AddComponent<LineRenderer>();
-            }
-            ropeRenderer.startWidth = 0.05f;
-            ropeRenderer.endWidth = 0.05f;
-            ropeRenderer.material = new Material(Shader.Find("Sprites/Default"));
-            ropeRenderer.startColor = Color.yellow;
-            ropeRenderer.endColor = Color.yellow;
-            ropeRenderer.positionCount = 2;
-            ropeRenderer.enabled = false;
+            Debug.LogError("Rope Renderer not assigned in the inspector.");
+            return;
         }
 
+        ropeRenderer.startWidth = 0.05f;
+        ropeRenderer.endWidth = 0.05f;
+        ropeRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        ropeRenderer.startColor = Color.yellow;
+        ropeRenderer.endColor = Color.yellow;
+        ropeRenderer.positionCount = 2;
+        ropeRenderer.enabled = false;
 
-        trajectoryLine = GetComponent<LineRenderer>();
+        if (trajectoryLine == null)
+        {
+            Debug.LogError("Trajectory Line Renderer not assigned in the inspector.");
+            return;
+        }
         trajectoryLine.enabled = true;
         trajectoryLine.positionCount = 0;
         trajectoryLine.startWidth = 0.1f;
@@ -93,31 +104,22 @@ public class PlayerController : MonoBehaviour
     {
 
         isGrounded = Physics2D.OverlapCircle(GroundCheck.position, GroundCheckRadius, GroundLayer + OneWayLayer);
-
-
+        
         if (isGrounded) 
         {
             canDblJump = true;
         }
 
-        // Check for grapple points
+        if (Input.GetKeyDown(KeyCode.Space)) 
+        {    
+            Jump();
+        }
+
         CheckForGrapplePoints();
 
-        // Handle Toggle-Style Grappling with E key
         if (Input.GetKeyDown(grappleKey))
         {
-            if (!isGrappling && grapplePointCount > 0)
-            {
-                StartGrapple();
-            }
-            else if (isGrappling)
-            {
-                Vector2 velocityBeforeDetach = rb.linearVelocity;
-                StopGrapple();
-                
-                // Preserve momentum when detaching
-                rb.linearVelocity = velocityBeforeDetach * momentumRetention;
-            }
+            Grapple();
             
         }
         
@@ -126,79 +128,15 @@ public class PlayerController : MonoBehaviour
         {
             UpdateRopeVisual();
             HandleSwinging();
+            GrappleLaunch();
         }
 
-        // Jump
+        FallEffect();
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            
-            if (isGrounded) 
-            {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpForce);
-            } 
-            else if (canDblJump) 
-            {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpForce * DblJumpMultiplier);
-                canDblJump = false;
-            }
-        }
-
-        if (isGrappling && Input.GetKeyDown(KeyCode.Space))
-        {
-            Vector2 ropeDir = (ropeJoint.connectedAnchor - (Vector2)transform.position).normalized;
-            Vector2 perpendicular = new Vector2(ropeDir.y, -ropeDir.x);
-            Vector2 launch = rb.linearVelocity + perpendicular * 4f; // small launch push
-            StopGrapple();
-            rb.linearVelocity = launch;
-            return;
-        }
-
-
-
-        // Affect how gravity affects player when moving either up or down along y axis
-
-        if (rb.linearVelocity.y < 0) 
-        {
-            rb.gravityScale = GravityScale * 2f;  
-        } 
-        else if (rb.linearVelocity.y > 0 && !Input.GetKey(KeyCode.Space)) 
-        {
-            rb.gravityScale = GravityScale * 1.5f;  
-        } 
-        else 
-        {
-            rb.gravityScale = GravityScale;
-        }
-
-        // Movement Left or Right
-        float moveInput = Input.GetAxis("Horizontal");
+        horizontal = Input.GetAxis("Horizontal");
+        Flip();
         
-
-        if (moveInput != 0)
-        {
-            rb.linearVelocity = new Vector2(moveInput * MoveSpeed, rb.linearVelocity.y);
-            lastMoveDirection = Mathf.Sign(moveInput); // 1 if moving right, -1 if moving left
-        } 
-        else
-        {
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-        }
-
-
-        // Flips sprite when moving left or right
-        if (moveInput > 0)
-        {
-            transform.localScale = new Vector3(1, 1, 1); // right
-        }
-        else if (moveInput < 0)
-        {
-            transform.localScale = new Vector3(-1, 1, 1); // left
-        }
-
-
         // Shooting
-
-        // Start charging shot
         if (!isChargingShot)
         {
             if (Input.GetKeyDown(KeyCode.J))
@@ -212,7 +150,6 @@ public class PlayerController : MonoBehaviour
                 StartChargingShot();
             }
         }
-
 
         // While holding J or K, keep charging and update line
         if (isChargingShot && (Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.K)))
@@ -230,13 +167,83 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // void OnTriggerEnter2D(Collider2D collision)
-    // {
-    //     if (collision.CompareTag("Ladder"))
-    //     {
-    //         Climb();
-    //     }
-    // }
+    void FixedUpdate()
+    {
+        rb.linearVelocity = new Vector2(horizontal * MoveSpeed, rb.linearVelocity.y);
+    }
+
+    void Jump()
+    {
+        
+        if (isGrounded) 
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpForce);
+            audioManager.PlaySFX(audioManager.jump);
+        } 
+        else if (canDblJump) 
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, JumpForce * DblJumpMultiplier);
+            // make jump audio higher pitched
+            audioManager.PlaySFX(audioManager.jump);
+            canDblJump = false;
+        }
+    }
+
+    void Grapple()
+    {
+        if (!isGrappling && grapplePointCount > 0)
+        {
+            StartGrapple();
+        }
+        else if (isGrappling)
+        {
+            Vector2 velocityBeforeDetach = rb.linearVelocity;
+            StopGrapple();
+            
+            // Preserve momentum when detaching
+            rb.linearVelocity = velocityBeforeDetach * momentumRetention;
+        }
+    }
+
+    void GrappleLaunch()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Vector2 ropeDir = (ropeJoint.connectedAnchor - (Vector2)transform.position).normalized;
+            Vector2 perpendicular = new Vector2(ropeDir.y, -ropeDir.x);
+            Vector2 launch = rb.linearVelocity + perpendicular * 4f; // small launch push
+            StopGrapple();
+            rb.linearVelocity = launch;
+            return;
+        }
+    }
+
+    void FallEffect()
+    {
+        if (rb.linearVelocity.y < 0) 
+        {
+            rb.gravityScale = GravityScale * 2f;  
+        } 
+        else if (rb.linearVelocity.y > 0 && !Input.GetKey(KeyCode.Space)) 
+        {
+            rb.gravityScale = GravityScale * 1.5f;  
+        } 
+        else 
+        {
+            rb.gravityScale = GravityScale;
+        }
+    }
+
+    void Flip()
+    {
+        if (isFacingRight && horizontal < 0 || !isFacingRight && horizontal > 0)
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1;
+            transform.localScale = localScale;
+        }
+    }
 
     void StartChargingShot()
     {
@@ -266,6 +273,7 @@ public class PlayerController : MonoBehaviour
         if (firePoint == null || projectilePrefab == null) return;
 
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+        audioManager.PlaySFX(audioManager.playerShoot);
         ToolProjectile projScript = projectile.GetComponent<ToolProjectile>();
 
         if (projScript != null)

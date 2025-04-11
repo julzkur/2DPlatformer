@@ -6,8 +6,12 @@ public class EnemyMechanics : MonoBehaviour
     private Rigidbody2D rb;
     private bool isChasing = false;
     private float shootTimer = 0f;
-    private int health = 3;
-    private int maxhealth = 3;
+    private float health = 3;
+    private float maxHealth = 3;
+    [SerializeField] EnHealthBar healthBar;
+
+    AudioManager audioManager;
+    
 
 
     [Header("Movement")]
@@ -42,6 +46,18 @@ public class EnemyMechanics : MonoBehaviour
         rb.freezeRotation = true;
         currentPoint = point2.transform;
         lastMoveDirection = (transform.localScale.x >= 0) ? 1f : -1f;
+        healthBar = GetComponentInChildren<EnHealthBar>();
+        audioManager = GameObject.FindWithTag("Audio").GetComponent<AudioManager>();
+        if (audioManager == null)
+        {
+            Debug.LogError("AudioManager not found in the scene.");
+        }
+    }
+
+    void Start()
+    {
+        health = maxHealth;
+        healthBar.UpdateHealthBar(health, maxHealth);
     }
 
     void Update()
@@ -147,6 +163,7 @@ public class EnemyMechanics : MonoBehaviour
         if (firePoint == null || projectilePrefab == null) return;
 
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+        audioManager.PlaySFX(audioManager.enemyShoot);
         EnemyProjectile projRb = projectile.GetComponent<EnemyProjectile>();
         
         if (projRb != null)
@@ -159,14 +176,20 @@ public class EnemyMechanics : MonoBehaviour
     {
         if (collision.CompareTag("PlayerProjectile"))
         {
-            health--;
-            Debug.Log("Enemy health: " + health);
-            if (health <= 0)
-            {
-                Destroy(gameObject);
-            }
+            TakeDamage();
         }
 
+    }
+
+    public void TakeDamage()
+    {
+        audioManager.PlaySFX(audioManager.enemyHit);
+        health--;
+        healthBar.UpdateHealthBar(health, maxHealth);
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
 }

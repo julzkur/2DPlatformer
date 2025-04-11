@@ -9,9 +9,16 @@ public class PlayerHealth : MonoBehaviour
     public bool isActive = true;
     public GameObject[] hearts;
 
+    AudioManager audioManager;
+
     void Awake()
     {
         Instance = this;
+        audioManager = GameObject.FindWithTag("Audio").GetComponent<AudioManager>();
+        if (audioManager == null)
+        {
+            Debug.LogError("AudioManager not found in the scene.");
+        }
     }
 
     void Start()
@@ -23,6 +30,7 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int amount)
     {
         currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
+        audioManager.PlaySFX(audioManager.playerHit);
         UpdateHearts();
 
          if (ScreenFlash.Instance != null)
@@ -33,6 +41,7 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth <= 0)
         {
             Debug.Log("Player died!");
+            audioManager.PlaySFX(audioManager.death);
             StartCoroutine(GameController.Instance.Respawn(2f));
             
             currentHealth = maxHealth;

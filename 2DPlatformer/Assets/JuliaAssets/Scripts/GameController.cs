@@ -5,6 +5,7 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
     Vector2 checkpointPos;
+    AudioManager audioManager;
 
     // CameraController camController;
 
@@ -28,6 +29,8 @@ public class GameController : MonoBehaviour
         {
             Debug.LogError("Player not found! Ensure your player has the correct tag.");
         }
+
+        audioManager = GameObject.FindWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public IEnumerator Respawn(float duration) 
@@ -44,6 +47,7 @@ public class GameController : MonoBehaviour
 
         playerRb.linearVelocity = Vector2.zero;
         playerRb.simulated = false;
+
         if (playerSprite != null)
         {
             playerSprite.enabled = false;
@@ -60,6 +64,7 @@ public class GameController : MonoBehaviour
 
     public void UpdateCheckpoint(Vector2 pos)
     {
+        audioManager.PlaySFX(audioManager.checkpoint);
         checkpointPos = pos;
         Debug.Log("Checkpoint updated");
     }
