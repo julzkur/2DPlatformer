@@ -16,6 +16,10 @@ public class EnHealthBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 healthBarScale = transform.localScale;
+        healthBarScale.x = Mathf.Abs(healthBarScale.x); 
+        transform.localScale = healthBarScale;
+
         transform.rotation = mainCamera.transform.rotation;
         transform.position = target.position + offset;
     }

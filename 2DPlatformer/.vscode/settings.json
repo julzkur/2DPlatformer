@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "2DPlatformer.sln"
+    "dotnet.defaultSolution": "2DPlatformer.sln",
+    "FSharp.suggestGitignore": false
 }
