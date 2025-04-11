@@ -10,9 +10,15 @@ public class Lever : MonoBehaviour
     public GameObject leverOff;
     public bool isActivated = false;
     public bool canChange = false;
+    AudioManager audioManager;
 
     void Start()
     {
+        audioManager = GameObject.FindWithTag("Audio").GetComponent<AudioManager>();
+        if (audioManager == null)
+        {
+            Debug.LogError("AudioManager not found in the scene.");
+        }
         print("Starting");
         UpdateLeverState();
     }
@@ -24,6 +30,7 @@ public class Lever : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 print("E");
+                audioManager.PlaySFX(audioManager.lever);
                 isActivated = !isActivated;
                 TogglePlatforms(isActivated);
                 UpdateLeverState();

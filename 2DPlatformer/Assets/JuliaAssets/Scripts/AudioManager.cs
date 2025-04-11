@@ -15,11 +15,13 @@ public class AudioManager : MonoBehaviour
     public AudioClip checkpoint; 
     public AudioClip lever;
     public AudioClip death;
+    public AudioClip respawn;
+    public AudioClip win;
 
     private void Start()
     {
         musicSource.clip = background;
-        musicSource.volume = 0.5f;
+        musicSource.volume = 0.2f;
         musicSource.loop = true;
         musicSource.Play();
     }

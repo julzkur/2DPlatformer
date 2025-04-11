@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
 
     private Rigidbody2D rb;
+    AudioManager audioManager;
     GameController gameController;
 
     [Header("Movement")]
@@ -33,7 +34,7 @@ public class PlayerController : MonoBehaviour
     public float throwForce = 10f;
     public float maxThrowDistance = 20f;
     private float holdTime;
-    private LineRenderer trajectoryLine;
+    [SerializeField] LineRenderer trajectoryLine;
 
     [Header("Grappling Hook")]
     public float grappleRange = 5f;
@@ -41,7 +42,7 @@ public class PlayerController : MonoBehaviour
     public KeyCode grappleKey = KeyCode.E;
     public LayerMask grappableLayer;
     public GameObject grapplePointPrefab;
-    public LineRenderer ropeRenderer;
+    [SerializeField] LineRenderer ropeRenderer;
     public float momentumRetention = 0.9f;  // How much momentum to keep after detaching (0-1)
     
     // Grappling internals
@@ -51,6 +52,14 @@ public class PlayerController : MonoBehaviour
     private GameObject[] grapplePointsInRange = new GameObject[10]; // Pre-allocate array
     private int grapplePointCount = 0;
 
+    void Awake()
+    {
+        audioManager = GameObject.FindWithTag("Audio").GetComponent<AudioManager>();
+        if (audioManager == null)
+        {
+            Debug.LogError("AudioManager not found in the scene.");
+        }
+    }
     void Start()
     {
         gameController = GameController.Instance;
@@ -64,22 +73,23 @@ public class PlayerController : MonoBehaviour
         // Setup line renderer if not assigned
         if (ropeRenderer == null)
         {
-            ropeRenderer = transform.Find("PlayerSprite").GetComponent<LineRenderer>();
-            if (ropeRenderer == null)
-            {
-                ropeRenderer = gameObject.AddComponent<LineRenderer>();
-            }
-            ropeRenderer.startWidth = 0.05f;
-            ropeRenderer.endWidth = 0.05f;
-            ropeRenderer.material = new Material(Shader.Find("Sprites/Default"));
-            ropeRenderer.startColor = Color.yellow;
-            ropeRenderer.endColor = Color.yellow;
-            ropeRenderer.positionCount = 2;
-            ropeRenderer.enabled = false;
+            Debug.LogError("Rope Renderer not assigned in the inspector.");
+            return;
         }
 
+        ropeRenderer.startWidth = 0.05f;
+        ropeRenderer.endWidth = 0.05f;
+        ropeRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        ropeRenderer.startColor = Color.yellow;
+        ropeRenderer.endColor = Color.yellow;
+        ropeRenderer.positionCount = 2;
+        ropeRenderer.enabled = false;
 
-        trajectoryLine = GetComponent<LineRenderer>();
+        if (trajectoryLine == null)
+        {
+            Debug.LogError("Trajectory Line Renderer not assigned in the inspector.");
+            return;
+        }
         trajectoryLine.enabled = true;
         trajectoryLine.positionCount = 0;
         trajectoryLine.startWidth = 0.1f;
@@ -266,6 +276,7 @@ public class PlayerController : MonoBehaviour
         if (firePoint == null || projectilePrefab == null) return;
 
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+        audioManager.PlaySFX(audioManager.playerShoot);
         ToolProjectile projScript = projectile.GetComponent<ToolProjectile>();
 
         if (projScript != null)
