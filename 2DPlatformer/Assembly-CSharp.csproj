@@ -59,7 +59,7 @@
     <UnityVersion>6000.0.36f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Users\bjarn\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.1\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Users\Julia\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.1\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.36f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.36f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.36f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
@@ -67,17 +67,18 @@
   <ItemGroup>
     <Compile Include="Assets\JuliaAssets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\JuliaAssets\Scripts\GameController.cs" />
-    <Compile Include="Assets\BjarniAssets\Scripts\PlayerClimb.cs" />
+    <Compile Include="Assets\BjarniAssets\Scripts\YouWon.cs" />
     <Compile Include="Assets\BjornAssets\Scripts\GrapplingPoint.cs" />
     <Compile Include="Assets\JuliaAssets\Scripts\EnemyProjectile.cs" />
+    <Compile Include="Assets\BjarniAssets\Scripts\PipeTeleporter.cs" />
     <Compile Include="Assets\BjarniAssets\Scripts\Lever.cs" />
     <Compile Include="Assets\BjarniAssets\Scripts\PauseMenu.cs" />
     <Compile Include="Assets\BjarniAssets\Scripts\DropDown.cs" />
+    <Compile Include="Assets\JuliaAssets\Scripts\EnHealthBar.cs" />
     <Compile Include="Assets\BjornAssets\Scripts\BigMan.cs" />
     <Compile Include="Assets\BjarniAssets\Scripts\PlayerHealthManager.cs" />
     <Compile Include="Assets\JuliaAssets\Scripts\EnemyMechanics.cs" />
     <Compile Include="Assets\BjarniAssets\Scripts\CameraFollowsPlayer.cs" />
-    <Compile Include="Assets\BjarniAssets\Scripts\LadderHandlers.cs" />
     <Compile Include="Assets\JuliaAssets\Scripts\ToolProjectile.cs" />
     <Compile Include="Assets\JuliaAssets\Scripts\CheckPoint.cs" />
     <Compile Include="Assets\BjarniAssets\Scripts\MainMenu.cs" />
@@ -92,6 +93,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\SDFFunctions.hlsl" />
+    <None Include="Assets\FREE CASUAL MUSIC PACK\WELCOME_CGMUSIC.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
@@ -587,6 +589,10 @@
     </Reference>
     <Reference Include="Mono.Cecil">
       <HintPath>Library\PackageCache\com.unity.nuget.mono-cecil@d6f9955a5d5f\Mono.Cecil.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\6000.0.36f1\Editor\Data\PlaybackEngines\MacStandaloneSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">

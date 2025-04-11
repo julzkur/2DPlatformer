@@ -6,8 +6,9 @@ public class EnemyMechanics : MonoBehaviour
     private Rigidbody2D rb;
     private bool isChasing = false;
     private float shootTimer = 0f;
-    private int health = 3;
-    private int maxhealth = 3;
+    private float health = 3;
+    private float maxHealth = 3;
+    [SerializeField] EnHealthBar healthBar;
 
 
     [Header("Movement")]
@@ -42,6 +43,13 @@ public class EnemyMechanics : MonoBehaviour
         rb.freezeRotation = true;
         currentPoint = point2.transform;
         lastMoveDirection = (transform.localScale.x >= 0) ? 1f : -1f;
+        healthBar = GetComponentInChildren<EnHealthBar>();
+    }
+
+    void Start()
+    {
+        health = maxHealth;
+        healthBar.UpdateHealthBar(health, maxHealth);
     }
 
     void Update()
@@ -159,14 +167,19 @@ public class EnemyMechanics : MonoBehaviour
     {
         if (collision.CompareTag("PlayerProjectile"))
         {
-            health--;
-            Debug.Log("Enemy health: " + health);
-            if (health <= 0)
-            {
-                Destroy(gameObject);
-            }
+            TakeDamage();
         }
 
+    }
+
+    public void TakeDamage()
+    {
+        health--;
+        healthBar.UpdateHealthBar(health, maxHealth);
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
 }
