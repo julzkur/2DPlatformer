@@ -34,6 +34,7 @@ Desktop.ini
 # Logs and crash reports
 *.log
 *.stacktrace
+*.dwlt
 
 # Build artifacts
 *.apk

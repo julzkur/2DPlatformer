@@ -7,6 +7,7 @@ public class EnemyMechanics : MonoBehaviour
     private bool isChasing = false;
     private float shootTimer = 0f;
     private int health = 3;
+    private int maxhealth = 3;
 
 
     [Header("Movement")]

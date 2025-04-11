@@ -27,11 +27,18 @@ public class ToolProjectile : MonoBehaviour
     public void SetDirectionandForce(float holdTime, float throwForce, float maxThrowDistance, float dir)
     {
         faceDirection = dir;
+
+        // Flip sprite based on direction
         if (dir < 0)
         {
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * dir, transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(-1, 1, 1);
         }
-        throwDirection = transform.localScale;
+        else
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+
+        throwDirection = new Vector2(dir, 1).normalized;
 
         float force = Mathf.Min(holdTime * throwForce, maxThrowDistance);
 
@@ -39,8 +46,10 @@ public class ToolProjectile : MonoBehaviour
         {
             rb = GetComponent<Rigidbody2D>();
         }
+
         rb.linearVelocity = throwDirection * force;
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
