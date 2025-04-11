@@ -350,8 +350,8 @@ public class NewPlayer : MonoBehaviour
 
     // --- Health & Collision --- 
     public void TakeDamage() {
-        if (PlayerHealthHearts.Instance != null) {
-            PlayerHealthHearts.Instance.TakeDamage(1);
+        if (PlayerHealth.Instance != null) {
+            PlayerHealth.Instance.TakeDamage(1);
         } else {
             Debug.LogWarning("PlayerHealthHearts instance not found for TakeDamage call.");
         }
