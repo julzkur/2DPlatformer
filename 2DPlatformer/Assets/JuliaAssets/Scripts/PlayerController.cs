@@ -223,16 +223,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     void UpdateTrajectoryLine()
     {
         Vector2 throwDirection = new Vector2(shootDirection, 1).normalized;
+        float force = Mathf.Min(holdTime * throwForce, maxThrowDistance);
+        Vector2 initialVelocity = throwDirection * force;
 
         for (int i = 0; i < trajectoryLine.positionCount; i++)
         {
             float time = i * 0.1f;
             Vector2 predictedPosition = (Vector2)firePoint.position +
-                throwDirection * Mathf.Min(holdTime * throwForce, maxThrowDistance) * time +
+                initialVelocity * time +
                 0.5f * Physics2D.gravity * time * time;
 
             trajectoryLine.SetPosition(i, predictedPosition);
