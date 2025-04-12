@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 608976908355081327}
   - component: {fileID: 6409247695208629507}
   - component: {fileID: 2462122266036901857}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5075306033920710209}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 4603791088339656027}
   - component: {fileID: 2949256465128389179}
   - component: {fileID: 3701718041255838983}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -320,7 +320,7 @@ GameObject:
   - component: {fileID: 6064798473223890254}
   - component: {fileID: 4744311630135481161}
   - component: {fileID: 1020002351702294307}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -395,7 +395,7 @@ GameObject:
   - component: {fileID: 3964412672243292680}
   - component: {fileID: 7472279884991116956}
   - component: {fileID: 4306472398738123454}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -498,9 +498,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8382844130892091959}
     m_Modifications:
+    - target: {fileID: 581893544596084902, guid: da8ddb530c8c8ef49a9499941a7b2285, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2841919498591292320, guid: da8ddb530c8c8ef49a9499941a7b2285, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2841919498591292320, guid: da8ddb530c8c8ef49a9499941a7b2285, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2953967776555076097, guid: da8ddb530c8c8ef49a9499941a7b2285, type: 3}
+      propertyPath: m_Radius
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 3162147587439845725, guid: da8ddb530c8c8ef49a9499941a7b2285, type: 3}
       propertyPath: point1
@@ -514,6 +526,14 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 4306472398738123454}
+    - target: {fileID: 3162147587439845725, guid: da8ddb530c8c8ef49a9499941a7b2285, type: 3}
+      propertyPath: enemyLayer.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 3162147587439845725, guid: da8ddb530c8c8ef49a9499941a7b2285, type: 3}
+      propertyPath: obstructionLayer.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3916272195094666083, guid: da8ddb530c8c8ef49a9499941a7b2285, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.75077
@@ -553,6 +573,38 @@ PrefabInstance:
     - target: {fileID: 3916272195094666083, guid: da8ddb530c8c8ef49a9499941a7b2285, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5421583554144997384, guid: da8ddb530c8c8ef49a9499941a7b2285, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6228553120113902237, guid: da8ddb530c8c8ef49a9499941a7b2285, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415672945957430852, guid: da8ddb530c8c8ef49a9499941a7b2285, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1895614531058365818, guid: 3a193848c8d389f4c9eb72aa4a07aa1a, type: 3}
+    - target: {fileID: 7415672945957430852, guid: da8ddb530c8c8ef49a9499941a7b2285, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415672945957430852, guid: da8ddb530c8c8ef49a9499941a7b2285, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415672945957430852, guid: da8ddb530c8c8ef49a9499941a7b2285, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497134465340489563, guid: da8ddb530c8c8ef49a9499941a7b2285, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497134465340489563, guid: da8ddb530c8c8ef49a9499941a7b2285, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.03
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

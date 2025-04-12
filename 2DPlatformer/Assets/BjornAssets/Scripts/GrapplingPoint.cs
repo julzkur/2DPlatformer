@@ -1,13 +1,16 @@
 using UnityEngine;
+using TMPro;
 
 public class GrapplingPoint : MonoBehaviour
 {
     // Visual indicator when player is in range
     public GameObject inRangeIndicator;
+    public TextMeshProUGUI hookPromptText;
     
     void Start()
     {
         // Ensure this object has the correct tag
+        hookPromptText.gameObject.SetActive(false);
         gameObject.tag = "GrapplePoint";
         
         // Create a visual indicator if one doesn't exist
@@ -41,6 +44,7 @@ public class GrapplingPoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            hookPromptText.gameObject.SetActive(true);
             inRangeIndicator.SetActive(true);
         }
     }
@@ -49,6 +53,7 @@ public class GrapplingPoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            hookPromptText.gameObject.SetActive(false);
             inRangeIndicator.SetActive(false);
         }
     }

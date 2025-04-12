@@ -17,6 +17,10 @@ public class AudioManager : MonoBehaviour
     public AudioClip death;
     public AudioClip respawn;
     public AudioClip win;
+    public AudioClip pickup;
+    public AudioClip enemyDeath;
+    public AudioClip pipeIn;
+    public AudioClip pipeOut;
 
     private void Start()
     {

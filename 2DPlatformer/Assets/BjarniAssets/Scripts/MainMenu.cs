@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour
             Application.Quit();
         }
         else if (Input.GetKeyDown(KeyCode.P)) {
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene("Bjarniscene");
         }
         else if (Input.GetKeyDown(KeyCode.C)) {
             ShowControls();

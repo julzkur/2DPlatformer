@@ -7,8 +7,10 @@ public class EnemyMechanics : MonoBehaviour
     private bool isChasing = false;
     private float shootTimer = 0f;
     private float health = 3;
-    private float maxHealth = 3;
+    public float maxHealth = 3;
     [SerializeField] EnHealthBar healthBar;
+    public LayerMask obstructionLayer;
+    public LayerMask enemyLayer;
 
     AudioManager audioManager;
     
@@ -30,7 +32,7 @@ public class EnemyMechanics : MonoBehaviour
     public Transform point2;
     private Transform currentPoint;
     public float patrolSpeed = 1.5f;
-    public float detectDistance = 5f;
+    public float detectDistance = 7f;
 
 
     [Header("Shooting")]
@@ -69,7 +71,9 @@ public class EnemyMechanics : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
         }
 
-        if (player != null && Vector2.Distance(transform.position, player.transform.position) < detectDistance)
+        float distance = Vector2.Distance(transform.position, player.transform.position);
+
+        if (distance < detectDistance && CanSeePlayer())
         {
             isChasing = true;
         } 
@@ -86,6 +90,21 @@ public class EnemyMechanics : MonoBehaviour
 
         Patrol();
 
+    }
+
+    bool CanSeePlayer()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, detectDistance, ~enemyLayer);
+        Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.red);
+        Debug.Log("Raycast Hit: " + hit.collider);
+        if (hit.collider != null && hit.collider.CompareTag("Player"))
+        {
+            return true; 
+        }
+        else
+        {
+            return false;
+        }
     }
 
     void Hover()

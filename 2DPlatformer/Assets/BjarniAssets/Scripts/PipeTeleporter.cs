@@ -5,7 +5,16 @@ public class PipeTeleporter : MonoBehaviour
     public PipeTeleporter destinationPipe;
     public Transform exitPoint;
     public float teleportDelay = 0.5f;
-    public AudioClip pipeSound;
+
+    AudioManager audioManager;
+    private void Awake()
+    {
+        audioManager = GameObject.FindWithTag("Audio").GetComponent<AudioManager>();
+        if (audioManager == null)
+        {
+            Debug.LogError("AudioManager not found in the scene.");
+        }
+    }
 
     private bool isTeleporting = false;
 
@@ -26,17 +35,17 @@ public class PipeTeleporter : MonoBehaviour
         Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
         if (rb) rb.simulated = false;
 
-        PlaySound(pipeSound, player.transform.position);
+        float originalXscale = player.transform.localScale.x;
 
-        yield return StartCoroutine(ScalePlayer(player.transform, Vector3.one, Vector3.zero, 0.25f));
+        audioManager.PlaySFX(audioManager.pipeIn);
+
+        yield return StartCoroutine(ScalePlayer(player.transform, new Vector3(originalXscale, 1, 1), Vector3.zero, 0.25f));
 
         yield return new WaitForSeconds(teleportDelay);
 
         player.transform.position = destinationPipe.exitPoint.position;
 
-        PlaySound(destinationPipe.pipeSound, player.transform.position);
-
-        yield return StartCoroutine(ScalePlayer(player.transform, Vector3.zero, Vector3.one, 0.25f));
+        yield return StartCoroutine(ScalePlayer(player.transform, Vector3.zero, new Vector3(originalXscale, 1, 1), 0.25f));
 
         // Enable physics
         if (rb) rb.simulated = true;

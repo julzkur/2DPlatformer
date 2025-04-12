@@ -1,5 +1,7 @@
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Lever : MonoBehaviour
 {
@@ -12,6 +14,8 @@ public class Lever : MonoBehaviour
     public bool canChange = false;
     public LayerMask oneWayLayer;
 
+    public TextMeshProUGUI promptText;
+
     AudioManager audioManager;
 
     void Start()
@@ -23,6 +27,7 @@ public class Lever : MonoBehaviour
         }
         print("Starting");
         UpdateLeverState();
+        promptText.gameObject.SetActive(false);
     }
 
     void Update() 
@@ -75,10 +80,12 @@ public class Lever : MonoBehaviour
     void OnTriggerEnter2D (Collider2D collision)
     {
         canChange = true;
+        promptText.gameObject.SetActive(true);
     }
 
     void OnTriggerExit2D (Collider2D collision)
     {
+        promptText.gameObject.SetActive(false);
         canChange = false;
     }
 }
