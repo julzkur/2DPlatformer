@@ -23,7 +23,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayOnClick()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Bjarniscene");
     }
 
     public void ShowControls()

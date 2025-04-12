@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class WinLever : MonoBehaviour
 {
-    private Canvas winCanvas;
+    public GameObject winCanvas;
     public Color activatedColor = new Color(0.2f, 0.6f, 0.2f); // Dark green
     public Color deactivatedColor = new Color(0.6f, 0.2f, 0.2f); // Dark red
     public GameObject leverOn;
@@ -11,13 +11,16 @@ public class WinLever : MonoBehaviour
     public bool isActivated = false;
     public bool canChange = false;
     public LayerMask oneWayLayer;
+    public PlayerController player;
 
     AudioManager audioManager;
+
+    // GameObject winCanvas;
 
     void Awake()
     {
         // Try to find the Canvas in the scene by name (assuming it's named "WinCanvas")
-        winCanvas = GameObject.Find("WinCanvas")?.GetComponent<Canvas>();
+        // winCanvas = GameObject.Find("UI")?.GetComponent<Canvas>();
 
         if (winCanvas == null)
         {
@@ -55,7 +58,8 @@ public class WinLever : MonoBehaviour
     void TriggerWinCanvas()
     {
         if (winCanvas != null)
-        {
+        { 
+            player.inputLocked = true;
             winCanvas.gameObject.SetActive(true); // Show the win screen
         }
         else

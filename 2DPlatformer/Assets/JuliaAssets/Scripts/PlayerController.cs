@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour
     private bool canDblJump;
 
     [Header("Shooting")]
+    public float shootCooldown = 0.2f;
+    private float nextShootTime = 0f;
+
     public GameObject projectilePrefab;
     public Transform firePoint;
     private int shootDirection = 1; // 1 = right, -1 = left
@@ -57,6 +60,7 @@ public class PlayerController : MonoBehaviour
     private DistanceJoint2D ropeJoint;
     private GameObject[] grapplePointsInRange = new GameObject[10]; // Pre-allocate array
     private int grapplePointCount = 0;
+    public bool inputLocked = false;
 
     void Awake()
     {
@@ -152,6 +156,8 @@ public class PlayerController : MonoBehaviour
     // Handles movement, jumping, shooting, starting grapple
     void HandleDefaultState()
     {
+        if (inputLocked) return;
+        
         // Movement
         float moveInput = Input.GetAxis("Horizontal");
         rb.linearVelocity = new Vector2(moveInput * MoveSpeed, rb.linearVelocity.y);
@@ -228,7 +234,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void HandleShootingInput() {
+    void HandleShootingInput()
+    {
+        if (Time.time < nextShootTime) return;
+
         if (!isChargingShot)
         {
             if (Input.GetKeyDown(KeyCode.J))
@@ -254,8 +263,11 @@ public class PlayerController : MonoBehaviour
             Shoot();
             trajectoryLine.positionCount = 0;
             isChargingShot = false;
+
+            nextShootTime = Time.time + shootCooldown;
         }
     }
+
     
     void Flip()
     {

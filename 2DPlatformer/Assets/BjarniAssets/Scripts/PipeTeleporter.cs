@@ -32,6 +32,10 @@ public class PipeTeleporter : MonoBehaviour
     {
         isTeleporting = true;
 
+        PlayerController controller = player.GetComponent<PlayerController>();
+        if (controller != null) controller.inputLocked = true;
+
+
         Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
         if (rb) rb.simulated = false;
 
@@ -52,6 +56,8 @@ public class PipeTeleporter : MonoBehaviour
 
         yield return new WaitForSeconds(0.25f);
         isTeleporting = false;
+
+        if (controller != null) controller.inputLocked = false;
     }
 
     private System.Collections.IEnumerator ScalePlayer(Transform target, Vector3 from, Vector3 to, float duration)
