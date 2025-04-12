@@ -16,7 +16,7 @@ public class EnemyMechanics : MonoBehaviour
 
     [Header("Movement")]
     public float MoveSpeed = 2.5f;
-    private float lastMoveDirection = 1f;
+    private bool isFacingRight = true;
     public float hoverDistance = 1f;
     public float hoverForce = 50f;
     public float hoverDamping = 5f;
@@ -45,7 +45,6 @@ public class EnemyMechanics : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.freezeRotation = true;
         currentPoint = point2.transform;
-        lastMoveDirection = (transform.localScale.x >= 0) ? 1f : -1f;
         healthBar = GetComponentInChildren<EnHealthBar>();
         audioManager = GameObject.FindWithTag("Audio").GetComponent<AudioManager>();
         if (audioManager == null)
@@ -83,6 +82,11 @@ public class EnemyMechanics : MonoBehaviour
             Attack();
         }
 
+        if ((rb.linearVelocity.x > 0 && !isFacingRight) || (rb.linearVelocity.x < 0 && isFacingRight))
+        {
+            Flip();
+        }
+
 
         Patrol();
 
@@ -112,11 +116,9 @@ public class EnemyMechanics : MonoBehaviour
         }
         if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == point2.transform)
         {
-            Flip();
             currentPoint = point1.transform;
         } else if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == point1.transform)
         {
-            Flip();
             currentPoint = point2.transform;
         }
     }
@@ -133,13 +135,6 @@ public class EnemyMechanics : MonoBehaviour
         if (player == null) return;
 
         transform.position = Vector2.MoveTowards(transform.position, player.transform.position, MoveSpeed * Time.deltaTime);
-        
-        Vector2 direction = player.transform.position - transform.position;
-
-        if ((direction.x > 0 && lastMoveDirection < 0) || (direction.x < 0 && lastMoveDirection > 0))
-        {
-            Flip();
-        }
 
         if (shootTimer <= 0f)
         {
@@ -152,7 +147,7 @@ public class EnemyMechanics : MonoBehaviour
 
     void Flip()
     {
-        lastMoveDirection *= -1;
+        isFacingRight = !isFacingRight;
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
@@ -168,7 +163,8 @@ public class EnemyMechanics : MonoBehaviour
         
         if (projRb != null)
         {
-            projRb.SetDirection(lastMoveDirection);
+            float dir = isFacingRight ? 1f : -1f;
+            projRb.SetDirection(dir);
         }
     }
 
