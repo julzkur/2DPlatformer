@@ -10,6 +10,8 @@ public class Lever : MonoBehaviour
     public GameObject leverOff;
     public bool isActivated = false;
     public bool canChange = false;
+    public LayerMask oneWayLayer;
+
     AudioManager audioManager;
 
     void Start()
@@ -42,13 +44,24 @@ public class Lever : MonoBehaviour
     {
         foreach (GameObject platform in platforms)
         {
-            if (platform.TryGetComponent(out PlatformEffector2D effector))
+            // Check the object's layer against the OneWayLayer mask
+            bool isOneWay = ((1 << platform.layer) & oneWayLayer.value) != 0;
+
+            if (isOneWay)
             {
-                effector.useOneWay = state; // Enable or disable one-way functionality
+                // If it’s a one-way platform, toggle the effector
+                if (platform.TryGetComponent(out PlatformEffector2D effector))
+                {
+                    effector.useOneWay = state;
+                }
+                if (platform.TryGetComponent(out SpriteRenderer platformRenderer))
+                {
+                    platformRenderer.color = state ? activatedColor : deactivatedColor;
+                }
             }
-            if (platform.TryGetComponent(out SpriteRenderer platformRenderer))
+            else
             {
-                platformRenderer.color = state ? activatedColor : deactivatedColor;
+                // Getur sett hérna custom dæmi
             }
         }
     }

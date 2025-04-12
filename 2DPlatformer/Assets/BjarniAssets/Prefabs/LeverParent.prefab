@@ -405,6 +405,9 @@ MonoBehaviour:
   leverOff: {fileID: 8556118637134019082}
   isActivated: 0
   canChange: 0
+  oneWayLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!61 &5905051611743237093
 BoxCollider2D:
   m_ObjectHideFlags: 0

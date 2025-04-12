@@ -100,7 +100,7 @@ Transform:
   m_GameObject: {fileID: 3583927952987831493}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.029181, y: -11.551928, z: 4.590344}
+  m_LocalPosition: {x: 3.029181, y: -12.1, z: 4.590344}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -201,7 +201,7 @@ Transform:
   m_GameObject: {fileID: 4822705809056773485}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.049181, y: -11.571928, z: 4.590344}
+  m_LocalPosition: {x: 9.049181, y: -12.1, z: 4.590344}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -487,7 +487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 7472279884991116956}
-  camera: {fileID: 0}
+  mainCamera: {fileID: 0}
   target: {fileID: 2178062729466695315}
   offset: {x: 0, y: 0.6, z: 0}
 --- !u!1001 &2910288861378254320

@@ -210,6 +210,11 @@ MonoBehaviour:
   speed: 10
   lifetime: 3
   rotationSpeed: 360
+  gravityScale: 1
+  projectileSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1001 &4269803549640914947
 PrefabInstance:
   m_ObjectHideFlags: 0

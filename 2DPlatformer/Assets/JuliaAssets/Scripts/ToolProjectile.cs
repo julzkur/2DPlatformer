@@ -7,14 +7,30 @@ public class ToolProjectile : MonoBehaviour
     public float rotationSpeed = 360f;
     public float gravityScale = 1f;
 
+    // Sprite Cycling
+    [Header("Visuals")]
+    public Sprite[] projectileSprites = new Sprite[3]; // Assign 3 sprites in Inspector
+    private SpriteRenderer spriteRenderer;
+    private static int nextSpriteIndex = 0; 
+
     private Rigidbody2D rb;
     private Vector2 throwDirection;
     private float faceDirection = 1f;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (rb == null) Debug.LogError("NewProjectile requires Rigidbody2D!");
+        if (spriteRenderer == null) Debug.LogError("NewProjectile requires SpriteRenderer!");
+    }
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = gravityScale;
+        SetProjectileSprite();
         Destroy(gameObject, lifetime); 
     }
 
@@ -50,6 +66,23 @@ public class ToolProjectile : MonoBehaviour
         rb.linearVelocity = throwDirection * force;
     }
 
+    private void SetProjectileSprite()
+    {
+        if (spriteRenderer != null && projectileSprites != null && projectileSprites.Length > 0)
+        {
+            nextSpriteIndex = nextSpriteIndex % projectileSprites.Length;
+
+            spriteRenderer.sprite = projectileSprites[nextSpriteIndex];
+            Debug.Log($"Assigned sprite: {spriteRenderer.sprite.name} at index {nextSpriteIndex}", gameObject);
+
+            // Increment for next shot
+            nextSpriteIndex = (nextSpriteIndex + 1) % projectileSprites.Length;
+        }
+        else if (spriteRenderer != null)
+        { 
+            Debug.LogWarning("No projectile sprites assigned or array is empty!", gameObject);
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
